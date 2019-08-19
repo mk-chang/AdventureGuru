@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if success %}
+    <div class="container-fluid text-center vertical-center">
+      <br><br><br>
+      <h2 class="font-weight-light">Thank you for your message. I'll get back to you shortly.</h2>
+    </div>
+
+{% else %}
+
+  {% for message in form.name.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  {% for message in form.email.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  {% for message in form.subject.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  {% for message in form.message.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  <div class="container ">
+    <br>
+    <h2>Contact Me.</h2>
+    <br>
+    <form method="POST" action="{{ url_for('core.contact') }}" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.name.label(class='form-group') }}
+        {{ form.name(class='form-control',style="background-color:#696969; color:#ffffff") }}
+      </div>
+      <div class="form-group" >
+        {{ form.email.label(class="form-group") }}
+        {{ form.email(class='form-control',style="background-color:#696969; color:#ffffff") }}
+      </div>
+      <div class="form-group">
+        {{ form.subject.label(class='form-group') }}
+        {{ form.subject(class='form-control',style="background-color:#696969; color:#ffffff") }}
+      </div>
+      <div class="form-group">
+        {{ form.message.label(class='form-group') }}
+        {{ form.message(class='form-control',style="background-color:#696969; color:#ffffff") }}
+      </div>
+      <div class="form-group ">
+        {{ form.submit(class="btn btn-primary") }}
+      </div>
+    </form>
+  </div>
+
+{% endif %}
+
+{% endblock %}

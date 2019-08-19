@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>AdventureGuru</title>
+  </head>
+  <body style="background-color: #000000;">
+
+
+    <div class="bd-example">
+      <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+          <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+          <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
+          <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
+        </ol>
+        <div class="carousel-caption d-block">
+          <nav class="navbar fixed-top navbar-expand-lg navbar-dark">
+            <a class="navbar-brand font-weight-light" href="{{url_for('core.index')}}"><img src="/static/website_pics/logo_white.png" width="25" height="25" alt=""> AdventureGuru</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+              <ul class="navbar-nav ml-auto justify-content-end">
+                <li class="nav-item active">
+                  <a class="nav-link font-weight-light" href="{{url_for('core.info')}}">  How It Works  <span class="sr-only">(current)</span> </a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link font-weight-light" href="{{url_for('destinations.input')}}">  Demo  <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link font-weight-light" href="{{url_for('core.about')}}">  About  <span class="sr-only">(current)</span> </a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link font-weight-light" href="{{url_for('core.contact')}}">  Contact  <span class="sr-only">(current)</span> </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+        <div class="carousel-caption d-none d-sm-none d-md-none d-lg-block">
+          <h1 class="display-4">Welcome to AdventureGuru!</h1>
+          <p class="lead">A smart web app that suggests new adventures based on where you've already been.</p>
+          <p><a class="btn btn-outline-light" href="#" role="button">Start Your Adventure</a></p>
+          <br><br><br><br><br>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-interval="2500">
+            <img src="/static/website_pics/home_1.jpeg"class="d-block w-100">
+          </div>
+          <div class="carousel-item" data-interval="2500">
+            <img src="/static/website_pics/home_2.jpeg" class="d-block w-100">
+          </div>
+          <div class="carousel-item" data-interval="2500">
+            <img src="/static/website_pics/home_3.jpeg" class="d-block w-100">
+          </div>
+          <div class="carousel-item" data-interval="2500">
+            <img src="/static/website_pics/home_4.jpeg"class="d-block w-100">
+          </div>
+          <div class="carousel-item" data-interval="2500">
+            <img src="/static/website_pics/home_5.jpeg"class="d-block w-100">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer style="background-color: #000000;">
+      <blockquote class="blockquote text-center" style="margin:15px 0px 15px 0px;">
+          <h6 class="text-muted font-weight-light">&copy; AdventureGuru</h6>
+      </blockquote>
+    </footer>
+  </body>
+</html>
