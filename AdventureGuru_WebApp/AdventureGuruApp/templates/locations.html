@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<form class="form" action = "{{url_for('destinations.Share_Locations')}}" method="post">
+  <div class="container-fluid text-center vertical-center">
+    {% for i in range(3) %} <br> {% endfor %}
+    <h1 class="font-weight-light">Where have you been?</h1>
+    <p class="lead text-muted">Select the location you have been to. If you haven't been to any locations below, just pick the ones you're familiar with.</p>
+    <button type="submit" class="btn btn-outline-info">Submit</button>
+  </div>
+
+  <div class="container mt-4 md-4" style="color:#BEBEBE;">
+    <div class="row">
+      {% for locationName, locationPic in locationForm %}
+        <div class="col-sm-8 col-md-5 col-lg-4">
+          <div class="card text-white border-none mb-4" style="background-color: #202020;">
+            <img src="{{locationPic}}" class="card-img-top" alt=" Image Missing" width="300" height="300">
+            <div class="card-body" style="color:#BEBEBE;">
+              <div class="d-flex justify-content-between">
+                <h3 class="card-title">{{locationName}}</h3>
+                <div class="btn-group-toggle" data-toggle="buttons">
+                  <label class="btn btn-outline-secondary btn-sm">
+                    <input type="checkbox" checked autocomplete="off" name="{{locationName}}" id="{{locationName}}"> ↓
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</form>
+{% endblock %}
+
+<!--
+############################# ARCHIVE #############################
+
+<div class="container mt-4 text-center">
+    <div class="row">
+    {% for locationName, locationPic in locationForm %}
+      <div class="col-md-auto" >
+        <div class="container">
+            <img src="{{locationPic}}" class="img-fluid" width="300" height="300">
+            <h3 class="display-3 text-muted text-uppercase" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">{{locationName}}</h3>
+            <div class="btn-group-toggle" data-toggle="buttons" style="opacity: 0.5; position: absolute; top: 8px; right: 40px;">
+              <label class="btn btn-outline-secondary btn-lg">
+                <input type="checkbox" checked autocomplete="off" name="{{locationName}}" id="{{locationName}}"> ↓
+              </label>
+            </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+</div>
+
+<div class="col-md-auto" >
+  <div class="container">
+    <label class="btn btn-outline-secondary btn-lg">
+      <input type="checkbox" checked autocomplete="off" name="{{locationName}}" id="{{locationName}}">
+      <div class="container">
+        <img src="{{locationPic}}" class="img-fluid" width="300" height="300">
+        <h3 class="display-3 text-muted text-uppercase" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">{{locationName}}</h3>
+      </div>
+    </label>
+  </div>
+</div>
+
+<div class="custom-control custom-switch" style="opacity: 0.5; position: absolute; bottom: 8px; right: 40px;">
+  <input type="checkbox" class="custom-control-input" name="{{locationName}}" id="{{locationName}}">
+  <label class="custom-control-label" for="{{locationName}}"></label>
+</div>
+
+<div class="container-fluid text-center vertical-center">
+  <br><br><br>
+  <h1 class="font-weight-light">Where have you been?</h1>
+  <p class="lead text-muted">Select the locations you have travelled to.</p>
+  <form method="post">
+    {{ form.hidden_tag() }}
+    {{ form.submit(class="btn btn-outline-info")}}
+    <br><br>
+  <div class="container" style="max-width: 40%;">
+    <div class="form-group text-center bg-dark" style="background-color: #000000;">
+        {{form.locations(class="form-control")}}
+    </div>
+  </div>
+  </form>
+</div>
+
+-->

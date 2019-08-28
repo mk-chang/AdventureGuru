@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#training").load("/Recommend_Location");
+    });
+</script>
+<div id="training">
+  <div class="container-fluid text-center vertical-center">
+    {%for i in range(3)%} <br> {% endfor %}
+    <h1 class="font-weight-light">Sit Back and Relax</h1>
+    <p class="lead text-muted">Adventure Guru is learning your prefereces. We'll get back to you with recommendations soon!</p>
+    <br>
+    <div class="spinner-border text-info" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    {%for i in range(10)%} <br> {% endfor %}
+  </div>
+</div>
+{% endblock %}

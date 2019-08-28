@@ -1,8 +1,9 @@
-from AdventureGuruApp import db,login_manager
+from AdventureGuruApp import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
 
+'''
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
@@ -28,31 +29,32 @@ class User(db.Model,UserMixin):
 
     def __repr__(self):
         return f"Username {self.username}"
+'''
 
 class Destination(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    title = db.Column(db.String(140),nullable=False)
+    title = db.Column(db.String(64),nullable=False)
     location =  db.Column(db.String(64),nullable=False)
     type =  db.Column(db.String(64),nullable=False)
     cost = db.Column(db.Integer,nullable=False)
-    length = db.Column(db.Integer,nullable = False)
-    text = db.Column(db.Text,nullable=False)
-    imageFile = db.Column(db.String(64),nullable=False)
+    imageFilename = db.Column(db.String(64),nullable=False)
 
-    def __init__(self,title ,location ,type , cost, length, text ,imageFile):
+    def __init__(self,title ,location ,type , cost, imageFilename):
         self.title = title
         self.location = location
         self.type = type
         self.cost = cost
-        self.length = length
-        self.text = text
-        self.imageFile = imageFile
+        self.imageFilename = imageFilename
+
+    def json(self):
+        return {'title': self.title,'location':self.location,'type':self.type,'cost':self.cost,'imageFilename':self.imageFilename}
 
     def __repr__(self):
-        return f"Title: {self.title} -- Location: {self.location} -- Type: {self.type}"
+        return f"Title: {self.title} -- Location: {self.location} -- Type: {self.type} -- Cost: {self.cost}-- Filename: {self.imageFilename}"
 
+'''
 class CNN(db.Model):
 
     users = db.relationship(User)
@@ -69,4 +71,5 @@ class CNN(db.Model):
         self.user_id = user_id
 
     def __repr__(self):
-        return f"Post ID: {self.id} -- Date: {self.date} -- Title: {self.title}"
+        return f"User ID: {self.id} -- Date: {self.date} -- Title: {self.title}"
+'''

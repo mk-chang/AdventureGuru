@@ -33,7 +33,7 @@
                   <a class="nav-link font-weight-light" href="{{url_for('core.info')}}">  How It Works  <span class="sr-only">(current)</span> </a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link font-weight-light" href="{{url_for('destinations.input')}}">  Demo  <span class="sr-only">(current)</span></a>
+                  <a class="nav-link font-weight-light" href="{{url_for('destinations.Share_Locations')}}">  Demo  <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
                   <a class="nav-link font-weight-light" href="{{url_for('core.about')}}">  About  <span class="sr-only">(current)</span> </a>
@@ -45,11 +45,13 @@
             </div>
           </nav>
         </div>
-        <div class="carousel-caption d-none d-sm-none d-md-none d-lg-block">
-          <h1 class="display-4">Welcome to AdventureGuru!</h1>
-          <p class="lead">A smart web app that suggests new adventures based on where you've already been.</p>
-          <p><a class="btn btn-outline-light" href="#" role="button">Start Your Adventure</a></p>
-          <br><br><br><br><br>
+        <div class="carousel-caption">
+          <div class="container">
+            <h1 class="display-4">Welcome to AdventureGuru!</h1>
+            <p class="lead">A smart web app that suggests new adventures based on where you've already been.</p>
+            <p><a class="btn btn-outline-light" href="{{url_for('destinations.Share_Locations')}}" role="button">Start Your Adventure</a></p>
+            {% for i in range(5) %} <br> {% endfor %}
+          </div>
         </div>
         <div class="carousel-inner">
           <div class="carousel-item active" data-interval="2500">

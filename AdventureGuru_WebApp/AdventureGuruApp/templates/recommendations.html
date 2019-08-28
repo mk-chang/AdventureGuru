@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid text-center vertical-center">
+  {% for i in range(3) %} <br> {% endfor %}
+  <h1 class="font-weight-light">Here Are Your Recomendations</h1>
+  <p class="lead text-muted">Your recommendations are seperated into 3 Categories: Must-Go, Recommend and Avoid.</p>
+  <div class="dropdown">
+    <button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Locations
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      {% for location in Locations %}
+        <a class="dropdown-item" href="{{ url_for('destinations.Recommendations',location=location) }}">{{location}}</a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4 md-4">
+    {% for category, destinations in recommendations.items() %}
+      <h3 style="font-weight: 150">{{category}}</h3>
+      <div class="row">
+        {% for destination in destinations %}
+          <div class="col-sm-6 col-md-4 col-lg-4">
+            <div class="card text-white border-none mb-4" style="background-color: #202020;">
+              <img src="/static/website_pics/destination_image.jpeg" class="card-img-top" alt=" Image Missing">
+              <div class="card-body ml-2 " style="color:#BEBEBE;">
+                <h3 class="card-text">{{destination.title}}</h3>
+                <h6 class="card-subtitle font-weight-light">{{destination.type}} • {% for n in range(destination.cost) %} $ {% endfor %}</h6>
+                <p class="card-text mt-1"><small class="text-muted">Posted by {{destination.title}}</small></p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        <hr style="border-color:#BEBEBE; height: 2px;">
+      </div>
+    {% endfor %}
+</div>
+
+<div class="container m-10">
+  <p class="text-center">
+    <br>
+    <a href="#" style="color: #5bc0de;">Back to top</a>
+    <br>
+  </p>
+</div>
+
+{% endblock %}
+<!--
+############################# ARCHIVE #############################
+
+<div class="container mt-4 md-4" style="color:#BEBEBE;">
+    {% for location, destinations in experienceForm %}
+      <div class="row">
+        <h2 class="font-weight-light text-uppercase ml-4">{{location}}</h2>
+        <div class="card-columns">
+        {% for destination in destinations %}
+          <div class="card text-white border-none m-4" style="background-color: #202020;">
+            <img src="/static/website_pics/destination_image.jpeg" class="card-img-top" alt=" Image Missing">
+            <div class="card-body" style="color:#BEBEBE;">
+              <div class="d-flex justify-content-between ml-2 mb-1">
+                <h5 class="card-text">{{destination.title}}</h5>
+                <p class="card-text"><small class="text-muted">Posted by {{destination.title}}</small></p>
+              </div>
+              <h6 class="card-subtitle font-weight-light ml-2 mb-3">{{destination.type}} • {% for n in range(destination.cost) %} $ {% endfor %}</h6>
+              <div class="btn-group btn-group-toggle btn-sm" data-toggle="buttons">
+                <label class="btn btn-outline-secondary btn-sm">
+                  <input type="radio" autocomplete="off" name="{{destination.title}}" value="-1" id="{{destination.title}}">
+                  <img src="/static/website_pics/Bad_Icon.png" width="20" height="20" alt="">
+                </label>
+                <label class="btn btn-outline-secondary btn-sm">
+                  <input type="radio" autocomplete="off" name="{{destination.title}}" value="1"{{destination.title}}">
+                  <img src="/static/website_pics/Good_Icon.png" width="20" height="20" alt="">
+                </label>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        <hr style="border-color:#BEBEBE; height: 2px;">
+      </div>
+    {% endfor %}
+</div>
+-->

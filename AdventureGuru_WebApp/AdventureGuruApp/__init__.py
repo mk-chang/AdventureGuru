@@ -3,6 +3,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_mail import Mail
+from flask_restful import Api,Resource
 #from flask_login import LoginManager
 
 ##############################################################
@@ -41,6 +42,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 Migrate(app,db)
 
+
+
 ##############################################################
 
                         #Login Setup
@@ -52,6 +55,17 @@ Migrate(app,db)
 #login_manager.init_app(app)
 #login_manager.login_view = 'user.login'
 
+##############################################################
+
+                        #Restful Api Setup
+
+##############################################################
+
+api = Api(app)
+from AdventureGuruApp.destinations.api import destinationAPI,allDestinationAPI
+
+api.add_resource(destinationAPI, '/api/destination/<string:title>')
+api.add_resource(allDestinationAPI,'/api/destination/all/<string:location>')
 
 ##############################################################
 
