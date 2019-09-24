@@ -1,12 +1,25 @@
 from flask import session,render_template, request, Blueprint, redirect, url_for
 from AdventureGuruApp import db
-from AdventureGuruApp.models import Destination
-from AdventureGuruApp.ML import recomendationModel
-from AdventureGuruApp.destinations.forms import LocationForm, ExperienceForm
+from AdventureGuruApp.models import Destination, Demo
+from AdventureGuruApp.destinations.ML import Load_Data, Run_Model, Train_demoModel
 import time
 
-
 destinations = Blueprint('destinations',__name__)
+
+@destinations.route('/Locations')
+def Destination_Locations():
+    Locations = db.session.query(Destination.location.distinct()).order_by(Destination.location).all()
+    Locations = [location[0] for location in Locations]
+
+    return render_template('destination_locations.html',Locations=Locations)
+
+@destinations.route('/Destinations/<string:location>')
+def Destinations(location):
+    Destinations = Destination.query.filter_by(location=location).order_by(Destination.title)
+    Locations = db.session.query(Destination.location.distinct()).order_by(Destination.location).all()
+    Locations = [location[0] for location in Locations]
+
+    return render_template('destinations.html',Destinations=Destinations,location=location,Locations=Locations)
 
 @destinations.route('/Share_Locations', methods=['GET','POST'])
 def Share_Locations():
@@ -14,27 +27,30 @@ def Share_Locations():
     if request.method == 'POST':
         selectedLocations = []
         for location,selected in request.form.items():
+            print(location)
+            print(selected)
             if selected == 'on':
                 selectedLocations.append(location)
+        print('############################## Share Locations - POST ####################################')
         print(selectedLocations)
         return redirect(url_for('destinations.Share_Destinations',selectedLocations=selectedLocations))
 
-    locationList= db.session.query(Destination.location.distinct()).order_by(Destination.location).all()
-    locationForm = [(i[0],"/static/location_pics/location_pic.jpeg") for i in locationList]
-    #locationPics.append("/static/location_pics/"+location+".jpeg")
-    return render_template('locations.html',locationForm=locationForm)
+    locationList = db.session.query(Destination.location.distinct()).order_by(Destination.location).all()
+    locationList = [location[0] for location in locationList]
+
+    return render_template('locations.html',locationList=locationList)
 
 @destinations.route('/Share_Destinations/<string:selectedLocations>', methods=['GET','POST'])
 def Share_Destinations(selectedLocations):
     if request.method == "POST":
         print('############################## Share Destinations - POST ####################################')
-        print(request.form)
+        print(request.form.items())
         inputData = []
         for title,review in request.form.items():
             if review == '1':
                 inputData.append((title,1))
             elif review == '-1':
-                inputData.append((title,-1))
+                inputData.append((title,0))
         print('Input Data')
         print(inputData)
         session['inputData']=inputData
@@ -74,24 +90,30 @@ def Share_Destinations(selectedLocations):
 
     return render_template('share.html',experienceForm=experienceForm)
 
-@destinations.route('/Recommend_Destinations', methods=['GET'])
+@destinations.route('/Train_Model', methods=['GET'])
 def Train_Model():
     if 'inputData' not in session:
         return redirect(url_for('destinations.Share_Locations'))
     else:
-        inputData = session['inputData']
-        print("Input Data")
-        print(inputData)
         return render_template('train.html')
 
-@destinations.route('/Recommend_Location')
-def Recommend_Location():
-    time.sleep(2)
+@destinations.route('/Recommend_Location_Options')
+def Recommend_Location_Options():
     #Data Input
+    print('############################## Data Input ####################################')
+    inputData = session['inputData']
+    print("Input Data")
+    print(inputData)
+    trainData,trainLabel = Load_Data(inputData)
+    print("trainData")
+    print(trainData)
+    print("trainData")
+    print(trainLabel)
 
     #Train Model
-
-    session['model'] = True
+    print('############################## Training Model ####################################')
+    model_id = Train_demoModel(trainData,trainLabel)
+    session['demo_model'] = model_id
 
     #Provide Locations
     Locations = db.session.query(Destination.location.distinct()).order_by(Destination.location).all()
@@ -103,21 +125,32 @@ def Recommend_Location():
 def Recommendations(location):
     time.sleep(2)
 
-    Locations = db.session.query(Destination.location.distinct()).order_by(Destination.location).all()
-    Locations = [i[0] for i in Locations]
-
+    print('############################## Running Model ####################################')
+    #Initialize Recommendations Dict
     recommendations = {
         "Must-Go":[],
         "Recommend":[],
         "Avoid":[],
         }
-    if 'model' in session:
-        for category in recommendations.keys():
-            destinations = Destination.query.filter_by(location=location)
-            recommendations[category] = destinations
+
+    #Run Each Destination in Location
+    if 'demo_model' in session:
+        model_id = session['demo_model']
+        destinations = Destination.query.filter_by(location=location)
+        for destination in destinations:
+            recommendation = Run_Model(model_id,destination.title)
+            print(destination.title+": "+str(recommendation))
+            if recommendation > 0.9:
+                recommendations['Must-Go'].append(destination)
+            elif recommendation > 0.5:
+                recommendations['Recommend'].append(destination)
+            elif recommendation < 0.2:
+                recommendations['Avoid'].append(destination)
+
+    Locations = db.session.query(Destination.location.distinct()).order_by(Destination.location).all()
+    Locations = [i[0] for i in Locations]
 
     return render_template('recommendations.html',recommendations=recommendations,Locations=Locations)
-
 
 '''
 #######################################################################################

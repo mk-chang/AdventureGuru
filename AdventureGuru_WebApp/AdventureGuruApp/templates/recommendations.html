@@ -16,24 +16,26 @@
   </div>
 </div>
 
-<div class="container mt-4 md-4">
+<div class="container mt-4 mb-4">
     {% for category, destinations in recommendations.items() %}
-      <h3 style="font-weight: 150">{{category}}</h3>
-      <div class="row">
-        {% for destination in destinations %}
-          <div class="col-sm-6 col-md-4 col-lg-4">
+      {% if destinations %}
+        <h3 class= "ml-3" style="font-weight: 150">{{category}}</h3>
+        <div class="card-deck">
+          {% for destination in destinations %}
+          <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card text-white border-none mb-4" style="background-color: #202020;">
-              <img src="/static/website_pics/destination_image.jpeg" class="card-img-top" alt=" Image Missing">
-              <div class="card-body ml-2 " style="color:#BEBEBE;">
-                <h3 class="card-text">{{destination.title}}</h3>
-                <h6 class="card-subtitle font-weight-light">{{destination.type}} • {% for n in range(destination.cost) %} $ {% endfor %}</h6>
-                <p class="card-text mt-1"><small class="text-muted">Posted by {{destination.title}}</small></p>
+              <img src="{{url_for('static',filename='destination_pics/'+destination.imageFilename)}}" class="card-img-top" alt=" Image Missing">
+              <div class="card-body" style="color:#BEBEBE;">
+                  <h4 class="card-text">{{destination.title}}</h4>
+                  <h6 class="card-subtitle font-weight-light">{{destination.category}} • {%if destination.cost == 0%} Free {% else %} {% for n in range(destination.cost) %} $ {% endfor %} {% endif %}</h6>
+                  <p class="card-text"><small class="text-muted">Posted by Maryana and Matt </small></p>
+              </div>
               </div>
             </div>
-          </div>
-        {% endfor %}
-        <hr style="border-color:#BEBEBE; height: 2px;">
-      </div>
+          {% endfor %}
+          <hr style="border-color:#BEBEBE; height: 2px;">
+        </div>
+      {% endif %}
     {% endfor %}
 </div>
 

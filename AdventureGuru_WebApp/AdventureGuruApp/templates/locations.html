@@ -4,22 +4,22 @@
   <div class="container-fluid text-center vertical-center">
     {% for i in range(3) %} <br> {% endfor %}
     <h1 class="font-weight-light">Where have you been?</h1>
-    <p class="lead text-muted">Select the location you have been to. If you haven't been to any locations below, just pick the ones you're familiar with.</p>
+    <p class="lead text-muted">Select the location you have been to. If you haven't been to any locations below, just pick one you're most familiar with.</p>
     <button type="submit" class="btn btn-outline-info">Submit</button>
   </div>
 
   <div class="container mt-4 md-4" style="color:#BEBEBE;">
     <div class="row">
-      {% for locationName, locationPic in locationForm %}
-        <div class="col-sm-8 col-md-5 col-lg-4">
+      {% for locationName in locationList %}
+        <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="card text-white border-none mb-4" style="background-color: #202020;">
-            <img src="{{locationPic}}" class="card-img-top" alt=" Image Missing" width="300" height="300">
+            <img src="{{url_for('static',filename='location_pics/'+locationName+'.jpg')}}" class="card-img-top" alt=" Image Missing">
             <div class="card-body" style="color:#BEBEBE;">
               <div class="d-flex justify-content-between">
                 <h3 class="card-title">{{locationName}}</h3>
                 <div class="btn-group-toggle" data-toggle="buttons">
                   <label class="btn btn-outline-secondary btn-sm">
-                    <input type="checkbox" checked autocomplete="off" name="{{locationName}}" id="{{locationName}}"> ↓
+                    <input type="checkbox" autocomplete="off" name="{{locationName}}" id="{{locationName}}"> ↓
                   </label>
                 </div>
               </div>

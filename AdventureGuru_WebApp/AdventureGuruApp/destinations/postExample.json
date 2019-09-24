@@ -1,7 +1,12 @@
 {
-	"title":"",
-	"location":"",
-	"type":"",
-	"cost":"",
-	"imageFilename":""
+    "title": "tTitle1",
+    "location": "tLocation1",
+		"country":"tCountry1",
+    "imageFilename": "tFilename1",
+		"cost": 1,
+		"touristy": true,
+		"accessibility": 1,
+    "types": ["tType1","tType2"],
+    "times": ["tTime1","tTime2"],
+    "ages": ["tAge1","tAge2"]
 }

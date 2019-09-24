@@ -42,8 +42,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 Migrate(app,db)
 
-
-
 ##############################################################
 
                         #Login Setup
@@ -62,10 +60,14 @@ Migrate(app,db)
 ##############################################################
 
 api = Api(app)
-from AdventureGuruApp.destinations.api import destinationAPI,allDestinationAPI
+from AdventureGuruApp.destinations.api import destinationAPI,allDestinationAPI, featureAPI, allFeatureAPI, demoAPI, allDemoAPI
 
 api.add_resource(destinationAPI, '/api/destination/<string:title>')
-api.add_resource(allDestinationAPI,'/api/destination/all/<string:location>')
+api.add_resource(allDestinationAPI,'/api/destination/all/')
+api.add_resource(featureAPI,'/api/feature/<string:category>/<string:featureTitle>')
+api.add_resource(allFeatureAPI,'/api/feature/all/<string:category>')
+api.add_resource(demoAPI,'/api/feature/<int:id>')
+api.add_resource(allDemoAPI,'/api/feature/all/')
 
 ##############################################################
 

@@ -9,8 +9,6 @@
     <title>AdventureGuru</title>
   </head>
   <body style="background-color: #000000;">
-
-
     <div class="bd-example">
       <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -36,6 +34,9 @@
                   <a class="nav-link font-weight-light" href="{{url_for('destinations.Share_Locations')}}">  Demo  <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
+                  <a class="nav-link font-weight-light" href="{{url_for('destinations.Destination_Locations')}}">  Adventures  <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
                   <a class="nav-link font-weight-light" href="{{url_for('core.about')}}">  About  <span class="sr-only">(current)</span> </a>
                 </li>
                 <li class="nav-item active">
@@ -46,11 +47,17 @@
           </nav>
         </div>
         <div class="carousel-caption">
-          <div class="container">
+          <div class="container-fluid d-none d-lg-block">
             <h1 class="display-4">Welcome to AdventureGuru!</h1>
             <p class="lead">A smart web app that suggests new adventures based on where you've already been.</p>
             <p><a class="btn btn-outline-light" href="{{url_for('destinations.Share_Locations')}}" role="button">Start Your Adventure</a></p>
-            {% for i in range(5) %} <br> {% endfor %}
+            {% for i in range(4) %} <br> {% endfor %}
+          </div>
+          <div class="container-fluid d-lg-none">
+            <h4 class="display-6">Welcome to AdventureGuru!</h4>
+            <p class="lead small">A smart web app that suggests new adventures based on where you've already been.</p>
+            <p><a class="btn btn-outline-light" href="{{url_for('destinations.Share_Locations')}}" role="button">Start Your Adventure</a></p>
+            <br>
           </div>
         </div>
         <div class="carousel-inner">

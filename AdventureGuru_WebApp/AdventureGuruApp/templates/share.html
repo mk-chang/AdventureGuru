@@ -9,32 +9,26 @@
   </div>
   <div class="container mt-4 md-4" style="color:#BEBEBE;">
       {% for location, destinations in experienceForm %}
-        <h2 style="font-weight: 150">{{location}}</h2>
-        <div class="row">
+        <h2 class= "ml-3" style="font-weight: 150">{{location}}</h2>
+        <div class="card-deck">
           {% for destination in destinations %}
-            <div class="col-sm-6 col-md-4 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4">
               <div class="card text-white border-none mb-4" style="background-color: #202020;">
-                <img src="/static/website_pics/destination_image.jpeg" class="card-img-top" alt=" Image Missing">
+                <img src="{{url_for('static',filename='destination_pics/'+destination.imageFilename)}}" class="card-img-top" alt=" Image Missing">
                 <div class="card-body" style="color:#BEBEBE;">
-                  <div class="d-flex justify-content-between ml-2">
-                    <div>
-                      <h3 class="card-text">{{destination.title}}</h3>
-                      <h6 class="card-subtitle font-weight-light">{{destination.type}} • {% for n in range(destination.cost) %} $ {% endfor %}</h6>
-                    </div>
-                    <div class="align-self-center">
-                      <div class="btn-group btn-group-toggle btn-lg" data-toggle="buttons">
-                        <label class="btn btn-outline-secondary">
-                          <input type="radio" autocomplete="off" name="{{destination.title}}" value="-1" id="{{destination.title}}">
-                          <img src="/static/website_pics/Bad_Icon.png" width="20" height="20" alt="">
-                        </label>
-                        <label class="btn btn-outline-secondary">
-                          <input type="radio" autocomplete="off" name="{{destination.title}}" value="1"{{destination.title}}">
-                          <img src="/static/website_pics/Good_Icon.png" width="20" height="20" alt="">
-                        </label>
-                      </div>
-                    </div>
+                  <h4 class="card-text">{{destination.title}}</h4>
+                  <h6 class="card-subtitle font-weight-light">{{destination.category}} • {%if destination.cost == 0%} Free {% else %} {% for n in range(destination.cost) %} $ {% endfor %} {% endif %}</h6>
+                  <p class="card-text"><small class="text-muted">Posted by Maryana and Matt </small></p>
+                  <div class="btn-group btn-group-toggle btn-lg px-0 py-0" data-toggle="buttons">
+                    <label class="btn btn-outline-secondary">
+                      <input type="radio" autocomplete="off" name="{{destination.title}}" value="-1" id="{{destination.title}}">
+                      <img src="/static/website_pics/Bad_Icon.png" width="20" height="20" alt="">
+                    </label>
+                    <label class="btn btn-outline-secondary">
+                      <input type="radio" autocomplete="off" name="{{destination.title}}" value="1"{{destination.title}}">
+                      <img src="/static/website_pics/Good_Icon.png" width="20" height="20" alt="">
+                    </label>
                   </div>
-                  <p class="card-text ml-2 mt-1"><small class="text-muted">Posted by {{destination.title}}</small></p>
                 </div>
               </div>
             </div>
@@ -55,47 +49,55 @@
 
 <!--
 ############################# ARCHIVE #############################
-<form method="post">
-  {{experienceForm.hidden_tag()}}
-  <div class="container text-center mb-4">
-    <h1 class="jumbotron-heading">Rate Your Experiences</h1>
-    <p class="lead text-muted">Let us know how you like the places you've been to!</p>
-    {{experienceForm.submit(class="btn btn-outline-info")}}
+<form class="form" action = "{{url_for('destinations.Share_Destinations',selectedLocations="none")}}" method="post">
+  <div class="container-fluid text-center vertical-center">
+    {% for i in range(3) %} <br> {% endfor %}
+    <h1 class="font-weight-light">Rate Your Experiences</h1>
+    <p class="lead text-muted">Let us know how you like the places you've been to! If you haven't been to any destinations, just rate them anyways.</p>
+    <button type="submit" class="btn btn-outline-info">Submit</button>
   </div>
-  <div class="container ">
-    <div class="card-columns">
-      {% for form in experienceForm.destinations %}
-      {% set destination = destinations[loop.index-1] %}
-      <div class="card text-white bg-dark border-none mb-4" style="background-color: #000000;">
-        <img src="/static/website_pics/destination_image.jpeg" class="card-img-top" alt=" Image Missing">
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <h5 class="card-title">{{destination.title}} </h5>
-            {% for radio in form.review %}
-              {{radio(class = "btn btn-secondary active")}}
-              {% if loop.index == 1 %}
-
-              <div class="btn-group btn-group-toggle btn-sm" data-toggle="buttons">
-              <label class="btn btn-secondary active">
-                <input type="checkbox" checked autocomplete="off"> {{radio(class = "btn btn-secondary active")}}
-                <img src="/static/website_pics/Bad_Icon.png" width="20" height="20" alt="">
-              </label>
-              {% else %}
-                <label class="btn btn-secondary active">
-                  <input type="checkbox" checked autocomplete="off"> {{radio(class = "btn btn-secondary active")}}
-                  <img src="/static/website_pics/Good_Icon.png" width="20" height="20" alt="">
-                </label>
+  <div class="container mt-4 md-4" style="color:#BEBEBE;">
+      {% for location, destinations in experienceForm %}
+        <h2 style="font-weight: 150">{{location}}</h2>
+        <div class="card-deck">
+          {% for destination in destinations %}
+            <div class="col-sm-6 col-md-4 col-lg-4">
+              <div class="card text-white border-none mb-4" style="background-color: #202020;">
+                <img src="{{url_for('static',filename='destination_pics/'+destination.imageFilename)}}" class="card-img-top" alt=" Image Missing">
+                <div class="card-body" style="color:#BEBEBE;">
+                  <div class="d-flex justify-content-between ml-2">
+                    <div>
+                      <h4 class="card-text">{{destination.title}}</h4>
+                      <h6 class="card-subtitle font-weight-light">{{destination.category}} • {% for n in range(destination.cost) %} $ {% endfor %}</h6>
+                    </div>
+                    <div class="align-self-center">
+                      <div class="btn-group btn-group-toggle btn-lg" data-toggle="buttons">
+                        <label class="btn btn-outline-secondary">
+                          <input type="radio" autocomplete="off" name="{{destination.title}}" value="-1" id="{{destination.title}}">
+                          <img src="/static/website_pics/Bad_Icon.png" width="20" height="20" alt="">
+                        </label>
+                        <label class="btn btn-outline-secondary">
+                          <input type="radio" autocomplete="off" name="{{destination.title}}" value="1"{{destination.title}}">
+                          <img src="/static/website_pics/Good_Icon.png" width="20" height="20" alt="">
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <p class="card-text ml-2 mt-1"><small class="text-muted">Posted by Maryana and Matt </small></p>
+                </div>
               </div>
-              {% endif %}
-            {% endfor %}
-          </div>
-          <div class="d-flex ">
-            <h5 class="card-subtitle font-weight-light" style="color:#BEBEBE"> {% for n in range(destination.cost) %} $ {% endfor %}  • {{destination.location}} , {{destination.type}} </h5>
-          </div>
-          <p class="card-text"><small class="text-muted">Post by {{destination.title}}</small></p>
+            </div>
+          {% endfor %}
+          <hr style="border-color:#BEBEBE; height: 2px;">
         </div>
-      </div>
       {% endfor %}
-      </div>
-    </div>
+  </div>
+</form>
+<div class="container m-10">
+  <p class="text-center">
+    <br>
+    <a href="#" style="color: #5bc0de;">Back to top</a>
+    <br>
+  </p>
+</div>
 -->
