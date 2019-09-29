@@ -139,13 +139,14 @@ def Recommendations(location):
         destinations = Destination.query.filter_by(location=location)
         for destination in destinations:
             recommendation = Run_Model(model_id,destination.title)
-            print(destination.title+": "+str(recommendation))
+            matchScore = round(recommendation[0][0]*100)
+            print(destination.title+": "+str(matchScore))
             if recommendation > 0.9:
-                recommendations['Must-Go'].append(destination)
+                recommendations['Must-Go'].append((destination,matchScore))
             elif recommendation > 0.5:
-                recommendations['Recommend'].append(destination)
+                recommendations['Recommend'].append((destination,matchScore))
             elif recommendation < 0.2:
-                recommendations['Avoid'].append(destination)
+                recommendations['Avoid'].append((destination,matchScore))
 
     Locations = db.session.query(Destination.location.distinct()).order_by(Destination.location).all()
     Locations = [i[0] for i in Locations]
